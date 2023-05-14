@@ -10,7 +10,7 @@ class Printer:
         self._paper_count = paper_count
         
     def __str__(self):
-        return f"Model: {self._model}\nPr Type: {self._pr_type}\nColor: {self._is_color}\nDuplex: {self._is_duplex}\nPaper Tray Capacity: {self._paper_tray_capacity}\nPaper Count: {self._paper_count}"
+        return f"""Model: {self._model}, Pr Type: {self._pr_type}, Color: {self._is_color}, Duplex: {self._is_duplex},Paper Tray Capacity: {self._paper_tray_capacity}, Paper Count: {self._paper_count}"""
 
     def __repr__(self):
         return f"Printer(model='{self._model}', pr_type='{self._pr_type}', is_color={self._is_color}, is_duplex={self._is_duplex}, paper_tray_capacity={self._paper_tray_capacity}, paper_count={self._paper_count})"
@@ -64,15 +64,15 @@ class Printer:
         self._paper_count = new_paper_count
 
     @staticmethod
-    def get_instance(cls):
-        if cls.default_printer is None:
-            cls.default_printer = Printer()
-        return cls.default_printer
+    def get_instance():
+        if not Printer.default_printer:
+           Printer.default_printer = Printer()
+        return Printer.default_printer
     
     @classmethod
-    def print_pages(self, pages):
-        if pages <= self.paper_count:
-            self.paper_count -= pages
+    def print_pages(cls, pages):
+        if pages <= cls.paper_count:
+            cls.paper_count -= pages
             print(f"Printing {pages} pages...")
         else:
             print("Not enough paper in the tray!")
